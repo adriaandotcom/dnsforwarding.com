@@ -1,4 +1,5 @@
 const http = require('http');
+const URL = require('url').URL;
 const SimpleBase = require('simple-base');
 
 const port = process.env.PORT || '3000';
