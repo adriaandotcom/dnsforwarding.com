@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Forward to a url based on a CNAME",
   "main": "index.js",
+  "engines": {
+    "node": "10"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
