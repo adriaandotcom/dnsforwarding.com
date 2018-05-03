@@ -11,16 +11,14 @@ const server = http.createServer((req, res) => {
   const url = new URL(referer);
 
   const hostname = url.host.split(':')[0];
-  const hostnameWithPort = req.headers.host.split('.').slice(-2).join('.');
-  const hostname = hostnameWithPort.split(':')[0];
 
   console.log('hostname', hostname);
 
-  if (req.headers.host.split('.').length === 2) {
+  if (hostname.split('.').length === 2) {
     return res.end('Homepage of dnsforwarding.com');
   }
 
-  const subdomainCode = req.headers.host.split('.').slice(0, -2).join('');
+  const subdomainCode = hostname.split('.').slice(0, -2).join('');
   const location = SimpleBase.decode(subdomainCode, 36);
   if (location.indexOf('http') === 0) {
     console.log('redirect to:', location);
