@@ -6,13 +6,10 @@ const port = process.env.PORT || '3000';
 
 const server = http.createServer((req, res) => {
 
-  const referer = req.headers.referer;
-  return res.end(JSON.stringify(req.headers));
-
-  // const referer = 'http://sadfsdf.dnsforwarding.com/';
-  if (!referer) return res.end('Something is wrong at our end, mail us.');
-  const url = new URL(referer);
-
+  const host = req.headers.host;
+  // const host = 'http://sadfsdf.dnsforwarding.com/';
+  if (!host) return res.end('Something is wrong at our end, mail us.');
+  const url = new URL(host);
   const hostname = url.host.split(':')[0];
 
   console.log('hostname', hostname);
