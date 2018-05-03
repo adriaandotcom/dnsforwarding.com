@@ -8,6 +8,8 @@ const server = http.createServer((req, res) => {
   console.log('req.headers.host', req.headers.host);
   console.log('req.headers.x-upstream', req.headers['X-Upstream']);
 
+  console.log(JSON.stringify(req.headers));
+
   // const hostname = req.headers.host.split(':')[0];
   const hostnameWithPort = req.headers.host.split('.').slice(-2).join('.');
   const hostname = hostnameWithPort.split(':')[0];
