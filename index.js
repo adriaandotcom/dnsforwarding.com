@@ -5,13 +5,12 @@ const port = process.env.PORT || '3000';
 
 const server = http.createServer((req, res) => {
 
-  console.log('host', req.headers.host);
-  console.log('x-upstream 1', req.headers['X-Upstream']);
-  console.log('x-upstream 2', req.headers['x-upstream']);
+  const referer = req.headers.referer;
+  // const referer = 'http://sadfsdf.dnsforwarding.com/';
+  if (!referer) return res.end('Something is wrong at our end, mail us.');
+  const url = new URL(referer);
 
-  console.log('JSON', JSON.stringify(req.headers));
-
-  // const hostname = req.headers.host.split(':')[0];
+  const hostname = url.host.split(':')[0];
   const hostnameWithPort = req.headers.host.split('.').slice(-2).join('.');
   const hostname = hostnameWithPort.split(':')[0];
 
