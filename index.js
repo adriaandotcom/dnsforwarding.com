@@ -5,10 +5,11 @@ const port = process.env.PORT || '3000';
 
 const server = http.createServer((req, res) => {
 
-  console.log('req.headers.host', req.headers.host);
-  console.log('req.headers.x-upstream', req.headers['X-Upstream']);
+  console.log('host', req.headers.host);
+  console.log('x-upstream 1', req.headers['X-Upstream']);
+  console.log('x-upstream 2', req.headers['x-upstream']);
 
-  console.log(JSON.stringify(req.headers));
+  console.log('JSON', JSON.stringify(req.headers));
 
   // const hostname = req.headers.host.split(':')[0];
   const hostnameWithPort = req.headers.host.split('.').slice(-2).join('.');
