@@ -9,7 +9,6 @@ function getSubdomainRedirect(url) {
   try {
     const hostname = url.split(':')[0].trim();
     const subdomainCode = hostname.split('.').slice(0, -2).join('').trim();
-    console.log('subdomainCode:', subdomainCode);
     let location = SimpleBase.decode(subdomainCode, 36).trim();
 
     // Somehow location can include a weird first character
