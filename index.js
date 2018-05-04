@@ -36,7 +36,7 @@ const server = http.createServer(async (req, res) => {
     if (host.split('.').length === 2) {
       res.writeHead(200, {'Content-Type': 'text/html' });
       const pathname = url.parse(req.url).pathname.slice(1);
-      if (!pathname) return res.end(`<h1>dnsforwarding.com</h1><p>Add URL as path to our website URL <a href="/https://example.com">https://dnsforwarding.com/https://example.com</a></p>`)
+      if (!pathname) return res.end(`<h1>dnsforwarding.com</h1><p>Add URL as path to our website URL <a href="/http://example.com">https://dnsforwarding.com/http://example.com</a></p>`)
       const cname = createCname(pathname);
       return res.end(`<h1>dnsforwarding.com</h1><p>Create a CNAME with this value:<br><a href="http://${cname}">${cname}</a></p><p>And it will redirect to your URL</p>`);
     }
