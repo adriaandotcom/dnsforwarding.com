@@ -12,6 +12,15 @@ function getSubdomainRedirect(url) {
   return false;
 }
 
+function resolveCname(host) {
+  return new Promise((resolve, reject) => {
+    dns.resolveCname(host, (err, cnames) => {
+      if (err) reject(err);
+      resolve(cnames);
+    });
+  });
+}
+
 const server = http.createServer(async (req, res) => {
   try {
     const host = req.headers.host;
@@ -27,7 +36,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     // Find url based on cname of hostname
-    const cnames = await dns.resolveCname(host);
+    const cnames = await resolveCname(host);
     if (cnames && cnames[0]) {
       const cnameLocation = getSubdomainRedirect(cnames[0]);
       if (cnameLocation) {
