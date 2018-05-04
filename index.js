@@ -6,16 +6,28 @@ const SimpleBase = require('simple-base');
 const port = process.env.PORT || '3000';
 
 function getSubdomainRedirect(url) {
-  const hostname = url.split(':')[0];
-  const subdomainCode = hostname.split('.').slice(0, -2).join('');
-  const location = SimpleBase.decode(subdomainCode, 36);
-  if (location.indexOf('http') === 0) return location;
-  return false;
+  try {
+    const hostname = url.split(':')[0].trim();
+    const subdomainCode = hostname.split('.').slice(0, -2).join('').trim();
+    console.log('subdomainCode:', subdomainCode);
+    let location = SimpleBase.decode(subdomainCode, 36).trim();
+
+    // Somehow location can include a weird first character
+    // See https://github.com/g-plane/simple-base/issues/1
+    if (location.slice(1, 5) === 'http') location = location.slice(1);
+
+    // We assume if the string starts with http it is an URL
+    if (location.indexOf('http') === 0) return location;
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 }
 
 function createCname(url) {
   const code = SimpleBase.encode(url, 36);
-  const cname = code.replace(/(.{63})/g,"$1.");
+  const cname = code.replace(/(.{63})/g, '$1.');
   return `${cname.trim('.')}.dnsforwarding.com`;
 }
 
@@ -30,14 +42,20 @@ function resolveCname(host) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    const host = req.headers.host;
+    const pathname = url.parse(req.url).pathname;
+
+    let host = req.headers.host;
     if (!host) return res.end('Something is wrong at our end, mail us. #nohost');
 
-    if (host.split('.').length === 2) {
+    if (pathname === '/favicon.ico') {
+      res.writeHead(404);
+      return res.end();
+    }
+    else if (host.split('.').length === 2 && pathname === '/') {
       res.writeHead(200, {'Content-Type': 'text/html' });
-      const pathname = url.parse(req.url).pathname.slice(1);
-      if (!pathname) return res.end(`<h1>dnsforwarding.com</h1><p>Add URL as path to our website URL <a href="/http://example.com">https://dnsforwarding.com/http://example.com</a></p>`)
-      const cname = createCname(pathname);
+      return res.end(`<h1>dnsforwarding.com</h1><p>Add URL as path to our website URL <a href="/http://example.com">https://dnsforwarding.com/http://example.com</a></p>`)
+    } else if (host.split('.').length === 2 && pathname.indexOf('/http') === 0) {
+      const cname = createCname(pathname.slice(1));
       return res.end(`<h1>dnsforwarding.com</h1><p>Create a CNAME with this value:<br><a href="http://${cname}">${cname}</a></p><p>And it will redirect to your URL</p>`);
     }
 
