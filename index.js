@@ -4,7 +4,7 @@ const SimpleBase = require('simple-base');
 
 const port = process.env.PORT || '3000';
 
-function getSubdomains(url) {
+function getSubdomainRedirect(url) {
   const hostname = url.split(':')[0];
   const subdomainCode = hostname.split('.').slice(0, -2).join('');
   const location = SimpleBase.decode(subdomainCode, 36);
