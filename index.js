@@ -1,4 +1,5 @@
 const http = require('http');
+const url = require('url');
 const dns = require('dns');
 const SimpleBase = require('simple-base');
 
@@ -10,6 +11,12 @@ function getSubdomainRedirect(url) {
   const location = SimpleBase.decode(subdomainCode, 36);
   if (location.indexOf('http') === 0) return location;
   return false;
+}
+
+function createCname(url) {
+  const code = SimpleBase.encode(url, 36);
+  const cname = code.replace(/(.{63})/g,"$1.");
+  return `${cname.trim('.')}.dnsforwarding.com`;
 }
 
 function resolveCname(host) {
@@ -26,7 +33,13 @@ const server = http.createServer(async (req, res) => {
     const host = req.headers.host;
     if (!host) return res.end('Something is wrong at our end, mail us. #nohost');
 
-    if (host.split('.').length === 2) return res.end('Homepage of dnsforwarding.com');
+    if (host.split('.').length === 2) {
+      res.writeHead(200, {'Content-Type': 'text/html' });
+      const pathname = url.parse(req.url).pathname.slice(1);
+      if (!pathname) return res.end(`<h1>dnsforwarding.com</h1><p>Add URL as path to our website URL <a href="/https://example.com">https://dnsforwarding.com/https://example.com</a></p>`)
+      const cname = createCname(pathname);
+      return res.end(`<h1>dnsforwarding.com</h1><p>Create a CNAME with this value:<br><a href="http://${cname}">${cname}</a></p><p>And it will redirect to your URL</p>`);
+    }
 
     // Find url based on hostname
     const hostLocation = getSubdomainRedirect(host);
