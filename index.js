@@ -1,9 +1,16 @@
 const http = require('http');
 const url = require('url');
 const dns = require('dns');
+const fs = require('fs');
 const SimpleBase = require('simple-base');
 
 const port = process.env.PORT || '3000';
+const template = fs.readFileSync('./template.hbs', 'utf8');
+
+function render(content) {
+  content = content || 'Something is wrong';
+  return template.replace('{{content}}', content);
+}
 
 function getSubdomainRedirect(url) {
   try {
@@ -52,13 +59,13 @@ const server = http.createServer(async (req, res) => {
     }
     else if (host.split('.').length === 2 && pathname === '/') {
       res.writeHead(200, {'Content-Type': 'text/html' });
-      return res.end(`<h1>dnsforwarding.com</h1><p>Add URL as path to our website URL <a href="/http://example.com">https://dnsforwarding.com/http://example.com</a></p>`)
+      return res.end(render('Nothing to see here'))
     } else if (host.split('.').length === 2 && pathname.indexOf('/http') === 0) {
       const path = url.parse(req.url).path;
       const hash = url.parse(req.url).hash;
       const fullPath = hash ? `${path}${hash}` : path;
       const cname = createCname(fullPath.slice(1));
-      return res.end(`<h1>dnsforwarding.com</h1><p>Create a CNAME with this value:<br><a href="http://${cname}">${cname}</a></p><p>And it will redirect to your URL</p>`);
+      return res.end(render('Nothing to see here'));
     }
 
     // Find url based on hostname
@@ -78,10 +85,10 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
-    return res.end('No redirect found in this url. #notfound');
+    return res.end(render('No redirect found in this url #notfound'));
   } catch (e) {
     console.error(e);
-    res.end('Something is wrong at our end, mail us. #catch');
+    res.end(render('No redirect found in this url #catch'));
   }
 });
 
