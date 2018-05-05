@@ -40,7 +40,7 @@ function createCname(url) {
 function resolveCname(host) {
   return new Promise((resolve, reject) => {
     dns.resolveCname(host, (err, cnames) => {
-      if (err) reject(err);
+      if (err) return reject(err);
       resolve(cnames);
     });
   });
