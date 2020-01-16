@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8" />
+  <title>404 DNS forwarding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="theme-color" content="#ffffff">
+  <script>window.sa=window.sa||function(){a=[].slice.call(arguments);sa.q?sa.q.push(a):sa.q=[a]};</script>
+  <script>sa('404')</script>
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    @media (min-width: 801px) {
+      body {
+        padding-top: 50px;
+      }
+    }
+    body {
+      background-image: linear-gradient(to right bottom, #12e0a7, #2dcef3);
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 15px;
+    }
+    body, input, p, textarea, a {
+      color: #084d54;
+    }
+    body, input, p, textarea {
+      font-family: "Kohinoor Bangla", Arial, sans-serif;
+      font-size: 16px;
+    }
+    h1, h2, p {
+      word-break: break-word;
+    }
+    h1, h2 {
+      color: #095c65;
+      margin: 0.5rem 0;
+    }
+    h1 {
+      letter-spacing: 0.5px;
+      font-size: 2em;
+    }
+    h1 span {
+      font-size: 130%;
+      margin-right: 2px;
+    }
+    h1 + p {
+      margin: 0 0 1rem 0;
+    }
+    h2 {
+      margin: 2rem 0 1rem 0;
+    }
+    p {
+      margin: 1rem 0;
+    }
+    p.copy {
+      margin: 0;
+      text-align: right;
+      display: none;
+    }
+    input, textarea {
+      box-sizing: border-box;
+      padding: 5px 10px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      width: 100%;
+      resize: vertical;
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+    textarea.invalid {
+      color: #757575;
+    }
+    input:active,
+    textarea:active,
+    input:focus,
+    textarea:focus {
+      background-color: white;
+    }
+    button {
+      border: none;
+      margin: 0;
+      padding: 0;
+      width: auto;
+      overflow: visible;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      padding: 5px 10px;
+      border-radius: 3px;
+      color: white;
+      cursor: pointer;
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+      vertical-align: sub;
+    }
+    body > * {
+      max-width: 550px;
+    }
+  </style>
+</html>
+<body>
+
+<div>
+<h1><span>DNS</span>forwarding</h1>
+
+<p>Link your subdomain to any URL with just a CNAME in your DNS.</p>
+
+<h2>1. Enter your URL</h2>
+
+<input type="url" placeholder="http://">
+
+<h2>2. Add this CNAME record to your DNS settings</h2>
+
+<textarea class="invalid" rows="1" id="cname" readonly>Fill URL above first...</textarea>
+
+<p class="copy">
+  <button>
+    <svg viewBox="0 -256 1850 1850">
+      <path transform="matrix(1,0,0,-1,37.966102,1305.4576)" d="m 1696,1152 q 40,0 68,-28 28,-28 28,-68 V -160 q 0,-40 -28,-68 -28,-28 -68,-28 H 736 q -40,0 -68,28 -28,28 -28,68 V 128 H 96 Q 56,128 28,156 0,184 0,224 v 672 q 0,40 20,88 20,48 48,76 l 408,408 q 28,28 76,48 48,20 88,20 h 416 q 40,0 68,-28 28,-28 28,-68 v -328 q 68,40 128,40 h 416 z M 1152,939 853,640 h 299 V 939 z M 512,1323 213,1024 h 299 v 299 z m 196,-647 316,316 v 416 H 640 V 992 q 0,-40 -28,-68 -28,-28 -68,-28 H 128 V 256 h 512 v 256 q 0,40 20,88 20,48 48,76 z m 956,-804 V 1024 H 1280 V 608 q 0,-40 -28,-68 -28,-28 -68,-28 H 768 v -640 h 896 z" />
+    </svg>
+    Copy
+  </button>
+<p>
+
+<h2>3. Share your personal link <small>(only http)</small></h2>
+<p>You can now share your link, for example http://link.example.com which will redirect to some long non-personal URL.</p>
+
+<p><small>Build by <a href="https://adriaan.io/?utm_source=dnsforwarding.com">Adriaan van Rossum</a> &middot; <a href="https://github.com/adriaanvanrossum/dnsforwarding.com/">GitHub repo</a> &middot; <a href="https://github.com/g-plane/simple-base">Base36 encoding we use</a></small></p>
+
+</div>
+
+
+<noscript><img src="https://queue.simpleanalyticscdn.com/hello.gif" alt=""></noscript>
+</body>
+</html>
